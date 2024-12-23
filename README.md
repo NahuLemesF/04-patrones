@@ -1,6 +1,8 @@
 # **Chat System - Patrón Mediator**
 **by NahuLemes**
 
+---
+
 Sistema de chat que demuestra la implementación del **patrón Mediator**, un patrón de diseño conductual que centraliza la interacción entre múltiples objetos, haciendo el sistema más modular y fácil de mantener.
 
 ---
