@@ -1,28 +1,115 @@
+# **Chat System - Patrón Mediator**
+**by NahuLemes**
 
-# Patron Singleton
-Singleton es un patrón de diseño creacional que nos permite asegurarnos de que una clase tenga una única instancia, a la vez que proporciona un punto de acceso global a dicha instancia.
+Sistema de chat que demuestra la implementación del **patrón Mediator**, un patrón de diseño conductual que centraliza la interacción entre múltiples objetos, haciendo el sistema más modular y fácil de mantener.
 
+---
 
+## **Descripción**
 
+Este proyecto es un sistema de chat donde los usuarios interactúan a través de un **mediador central**, siguiendo el patrón de diseño **Mediator**. El Mediador actúa como intermediario entre los usuarios, distribuyendo los mensajes de manera eficiente y desacoplada.
 
+---
 
+## **Arquitectura**
 
+El sistema está dividido en las siguientes capas:
 
+- **Mediator**:
+  - `IChatMediator`: Define la interfaz del mediador.
+  - `ChatMediator`: Implementa la lógica para gestionar los usuarios y distribuir mensajes.
 
+- **Colleagues**:
+  - `User`: Clase abstracta que define la estructura básica de un usuario.
+  - `ChatUser`: Implementación concreta de un usuario del chat.
 
-## Funcionamiento
+- **Aplicación**:
+  - `ChatApplication`: Gestiona la interacción entre los usuarios.
 
-Imagina que has creado un objeto y al cabo de un tiempo decides crear otro nuevo. En lugar de recibir un objeto nuevo, obtendrás el que ya habías creado.
+-**Controlador**
+  - `ChatController`: Inicializa el sistema, registra los usuarios y controla el flujo del chat.
 
-Ten en cuenta que este comportamiento es imposible de implementar con un constructor normal, ya que una llamada al constructor siempre debe devolver un nuevo objeto por diseño.
+---
 
-Al igual que una variable global, el patrón Singleton nos permite acceder a un objeto desde cualquier parte del programa. No obstante, también evita que otro código sobreescriba esa instancia.
+## **Diagrama de Clases**
 
-## Cuando usarlo...
+```
+               +--------------------+
+               |    IChatMediator   |
+               +--------------------+
+               | + sendMessage()    |
+               | + addUser()        |
+               +--------------------+
+                         ^
+                         |
+          +------------------------+
+          |       ChatMediator      |
+          +------------------------+
+          | + users (List<User>)   |
+          | + sendMessage()        |
+          | + addUser()            |
+          +------------------------+
+                         ^
+                         |
+       +---------------------------+
+       |           User            |
+       +---------------------------+
+       | - mediator: IChatMediator |
+       | - name: String            |
+       | + send()                  |
+       | + receive()               |
+       +---------------------------+
+                         ^
+                         |
+       +---------------------------+
+       |        ChatUser           |
+       +---------------------------+
+```
 
-- Utiliza el patrón Singleton cuando una clase de tu programa tan solo deba tener una instancia disponible para todos los clientes; por ejemplo, un único objeto de base de datos compartido por distintas partes del programa.
+---
 
--  Utiliza el patrón Singleton cuando necesites un control más estricto de las variables globales.
+## **Tecnologías Usadas**
 
+- **Java**: Lenguaje de programación principal.
+- **Java Streams**: Para optimizar la lógica de distribución de mensajes.
+- **IDE**: IntelliJ IDEA.
+
+---
+
+## **Cómo Funciona**
+
+1. **Inicialización**:
+   - `ChatController` crea un `ChatMediator` y registra a los usuarios en él.
+   
+2. **Interacción**:
+   - Los usuarios envían mensajes al mediador usando el método `sendMessage`.
+   - El mediador distribuye el mensaje a todos los demás usuarios registrados.
+
+3. **Desacoplamiento**:
+   - Los usuarios no interactúan directamente entre sí; solo conocen al mediador.
+
+---
+
+## **Ejemplo de Ejecución**
+
+```
+Nahuel, escribe tu mensaje:
+> Hola a todos!
+Nahuel envía: Hola a todos!
+Lucía recibe de Nahuel: Hola a todos!
+Carlos recibe de Nahuel: Hola a todos!
+
+Lucía, escribe tu mensaje:
+> Hola Nahuel, ¿cómo estás?
+Lucía envía: Hola Nahuel, ¿cómo estás?
+Nahuel recibe de Lucía: Hola Nahuel, ¿cómo estás?
+Carlos recibe de Lucía: Hola Nahuel, ¿cómo estás?
+
+Carlos, escribe tu mensaje:
+> ¡Todo bien, gracias!
+Carlos envía: ¡Todo bien, gracias!
+Nahuel recibe de Carlos: ¡Todo bien, gracias!
+Lucía recibe de Carlos: ¡Todo bien, gracias!
+```
 
 
